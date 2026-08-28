@@ -4,7 +4,7 @@ setup(
     name="flux-3-video-upscaler-api",
     version="0.1.0",
     author="Anil Matcha",
-    description="Python wrapper for Black Forest Labs' FLUX 3 Video Upscaler API -- upscale FLUX 3 (or any) video output beyond its native resolution (coming soon).",
+    description="Python wrapper for Black Forest Labs' FLUX 3 Video Upscaler API -- upscale FLUX 3 (or any) video output beyond its native resolution.",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     py_modules=["flux3_video_upscaler_api", "mcp_server"],

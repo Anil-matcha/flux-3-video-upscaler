@@ -23,25 +23,28 @@ class Flux3VideoUpscalerAPI:
             "Content-Type": "application/json"
         }
 
-    def upscale_video(self, video_url, target_resolution="1080p"):
+    def upscale_video(self, video_url, prompt=None, upscale_factor=2, creativity=0):
         """
         Submits a FLUX 3 Video Upscaler task.
 
         FLUX 3 Video Upscaler raises FLUX 3 (or any) video output beyond its
         native generation resolution, sharpening detail while preserving
-        motion coherence and native audio sync. FLUX 3 Video launches capped
-        at 720p ahead of a planned 1080p+ rollout, so this endpoint is
-        designed to bridge that gap.
+        motion coherence and native audio sync.
 
         :param video_url: URL of the source video to upscale.
-        :param target_resolution: Target resolution ('1080p', '2k', or '4k').
+        :param prompt: Optional text describing the desired enhancement direction, detail style, or visual refinement.
+        :param upscale_factor: Multiplier controlling output resolution scaling (1-4, default 2).
+        :param creativity: 0 = Precise (higher fidelity to source, $1.43/run), 1 = Creative (more reconstruction, $2.00/run). Default 0.
         :return: JSON response with request_id.
         """
         endpoint = f"{self.base_url}/flux-3-video-upscaler"
         payload = {
             "video_url": video_url,
-            "target_resolution": target_resolution,
+            "upscale_factor": upscale_factor,
+            "creativity": creativity,
         }
+        if prompt:
+            payload["prompt"] = prompt
         return self._post_request(endpoint, payload)
 
     # ------------------------------------------------------------------
@@ -110,7 +113,7 @@ if __name__ == "__main__":
         video_url = "https://example.com/clip-720p.mp4"
 
         print(f"Submitting FLUX 3 Video Upscaler task for: {video_url}")
-        submission = api.upscale_video(video_url=video_url, target_resolution="4k")
+        submission = api.upscale_video(video_url=video_url, upscale_factor=2, creativity=0)
         request_id = submission.get("request_id")
         print(f"Task submitted. Request ID: {request_id}")
 

@@ -10,15 +10,17 @@ def get_api():
     return Flux3VideoUpscalerAPI()
 
 @mcp.tool()
-def upscale_video(video_url: str, target_resolution: str = "1080p") -> str:
+def upscale_video(video_url: str, prompt: str = None, upscale_factor: float = 2, creativity: int = 0) -> str:
     """
     Upscale an existing video beyond its native resolution using FLUX 3 Video Upscaler.
 
     :param video_url: URL of the source video to upscale.
-    :param target_resolution: Target resolution ('1080p', '2k', or '4k').
+    :param prompt: Optional text describing the desired enhancement direction, detail style, or visual refinement.
+    :param upscale_factor: Multiplier controlling output resolution scaling (1-4, default 2).
+    :param creativity: 0 = Precise ($1.43/run), 1 = Creative ($2.00/run). Default 0.
     """
     api = get_api()
-    result = api.upscale_video(video_url, target_resolution)
+    result = api.upscale_video(video_url, prompt=prompt, upscale_factor=upscale_factor, creativity=creativity)
     return json.dumps(result, indent=2)
 
 @mcp.tool()

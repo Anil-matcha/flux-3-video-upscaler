@@ -7,9 +7,9 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 
-A Python wrapper for **FLUX 3 Video Upscaler** — a planned endpoint that raises FLUX 3 (or any) video output beyond its native generation resolution, delivered via [muapi.ai](https://muapi.ai/flux-3?utm_source=github&utm_medium=readme&utm_campaign=flux-3-video-upscaler-api). FLUX 3 Video launches capped at 720p ahead of a planned 1080p+ rollout, and this endpoint is designed to sharpen detail and raise resolution while preserving motion coherence and native audio sync — no re-generation required.
+A Python wrapper for **FLUX 3 Video Upscaler** — a live endpoint that raises FLUX 3 (or any) video output beyond its native generation resolution, delivered via [muapi.ai](https://muapi.ai/flux-3?utm_source=github&utm_medium=readme&utm_campaign=flux-3-video-upscaler-api). FLUX 3 Video launches capped at 720p/1080p, and this endpoint sharpens detail and raises resolution while preserving motion coherence and native audio sync — no re-generation required.
 
-> **Status: Coming Soon.** This SDK targets the endpoint MuAPI is preparing (`flux-3-video-upscaler`); requests will 404 until it goes live. [Reserve an API key](https://muapi.ai/flux-3?utm_source=github&utm_medium=readme&utm_campaign=flux-3-video-upscaler-api) now to get access the moment it launches. In the meantime, MuAPI's existing [Video Upscaler API](https://muapi.ai/video-upscaler?utm_source=github&utm_medium=readme&utm_campaign=flux-3-video-upscaler-api) already covers other models' video output.
+> **Status: Live.** `flux-3-video-upscaler` is live on MuAPI now. Pricing: **$1.43/run** at `creativity=0` (Precise) and **$2.00/run** at `creativity=1` (Creative), scaling with input video duration. [Get an API key](https://muapi.ai/flux-3?utm_source=github&utm_medium=readme&utm_campaign=flux-3-video-upscaler-api) to start using it.
 
 ## Related Projects
 
@@ -89,7 +89,8 @@ api = Flux3VideoUpscalerAPI()
 print("Submitting FLUX 3 Video Upscaler task...")
 submission = api.upscale_video(
     video_url="https://example.com/clip-720p.mp4",
-    target_resolution="4k"
+    upscale_factor=2,
+    creativity=0
 )
 
 # Wait for completion
@@ -110,7 +111,8 @@ curl --location --request POST "https://api.muapi.ai/api/v1/flux-3-video-upscale
   --header "x-api-key: YOUR_API_KEY" \
   --data-raw '{
       "video_url": "https://example.com/clip-720p.mp4",
-      "target_resolution": "4k"
+      "upscale_factor": 2,
+      "creativity": 0
   }'
 ```
 
@@ -118,7 +120,8 @@ curl --location --request POST "https://api.muapi.ai/api/v1/flux-3-video-upscale
 ```python
 submission = api.upscale_video(
     video_url="https://example.com/clip-720p.mp4",
-    target_resolution="4k",
+    upscale_factor=2,
+    creativity=0,
 )
 result = api.wait_for_completion(submission["request_id"])
 print(result["outputs"][0])
@@ -130,7 +133,7 @@ print(result["outputs"][0])
 
 | Method | Parameters | Description |
 | :--- | :--- | :--- |
-| `upscale_video` | `video_url`, `target_resolution` | Upscale an existing video beyond its native resolution ('1080p', '2k', or '4k'). |
+| `upscale_video` | `video_url`, `prompt` (optional), `upscale_factor` (1-4, default 2), `creativity` (0=Precise/1=Creative, default 0) | Upscale an existing video beyond its native resolution. $1.43/run at `creativity=0`, $2.00/run at `creativity=1`. |
 | `upload_file` | `file_path` | Upload a local file (image or video) to MuAPI for use in generation tasks. |
 | `get_result` | `request_id` | Check task status for a FLUX 3 Video Upscaler generation. |
 | `wait_for_completion` | `request_id`, `poll_interval`, `timeout` | Blocking helper that polls until the task completes. |
