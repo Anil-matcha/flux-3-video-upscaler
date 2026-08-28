@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 
-A Python wrapper for **FLUX 3 Video Upscaler** — a live endpoint that raises FLUX 3 (or any) video output beyond its native generation resolution, delivered via [muapi.ai](https://muapi.ai/flux-3?utm_source=github&utm_medium=readme&utm_campaign=flux-3-video-upscaler-api). FLUX 3 Video launches capped at 720p/1080p, and this endpoint sharpens detail and raises resolution while preserving motion coherence and native audio sync — no re-generation required.
+A Python wrapper for **FLUX 3 Video Upscaler** — a live endpoint that raises FLUX 3 (or any) video output beyond its native generation resolution, delivered via [muapi.ai](https://muapi.ai/flux-3?utm_source=github&utm_medium=readme&utm_campaign=flux-3-video-upscaler-api). It sharpens detail and raises resolution while preserving motion coherence and native audio sync — no re-generation required.
 
 > **Status: Live.** `flux-3-video-upscaler` is live on MuAPI now. Pricing: **$1.43/run** at `creativity=0` (Precise) and **$2.00/run** at `creativity=1` (Creative), scaling with input video duration. [Get an API key](https://muapi.ai/flux-3?utm_source=github&utm_medium=readme&utm_campaign=flux-3-video-upscaler-api) to start using it.
 
@@ -23,9 +23,10 @@ A Python wrapper for **FLUX 3 Video Upscaler** — a live endpoint that raises F
 
 ## 🚀 Why FLUX 3 Video Upscaler?
 
-FLUX 3 Video's initial general-availability release is capped at 720p resolution. **FLUX 3 Video Upscaler** is designed to bridge that gap:
+**FLUX 3 Video Upscaler** raises FLUX 3 (or any) video output beyond its native generation resolution:
 
-- **Beyond-Native Resolution**: Deliver 1080p, 2K, or 4K output from a 720p FLUX 3 (or other) source clip.
+- **Beyond-Native Resolution**: Scale a source clip up by a configurable `upscale_factor` (1-4x).
+- **Precise or Creative Modes**: `creativity=0` stays close to the source (Precise); `creativity=1` reconstructs more detail (Creative).
 - **Motion Coherence Preserved**: Sharpens detail without introducing warping or temporal artifacts.
 - **Native Audio Sync Retained**: Upscaled output keeps the original clip's synchronized audio track intact.
 - **Developer-First**: Simple Python SDK on top of MuAPI's unified infrastructure — no separate account or waitlist needed once you have a MuAPI key.
